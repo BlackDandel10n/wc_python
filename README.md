@@ -17,4 +17,5 @@ poetry run python src/wc_python [OPTIONS]
 ## Options
 
 -v, --version: Show version details and exit
+
 -h, --help: Show help page and exit
