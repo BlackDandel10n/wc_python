@@ -8,3 +8,8 @@ def get_state(args):
     state |= args.bytes * StateCode.BYTES.value
 
     return state
+
+def report(state, details, file_name = ""):
+    if state & StateCode.BYTES.value:
+        print(f"{details['bytes']:4}", end="\t")
+    print(file_name)

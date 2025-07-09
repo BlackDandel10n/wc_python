@@ -11,7 +11,7 @@ poetry install
 ## Run program
 
 ```bash
-poetry run python src/wc_python [OPTIONS]
+poetry run python src/wc_python [OPTIONS] [FILE]
 ```
 
 ## Options
@@ -21,3 +21,5 @@ poetry run python src/wc_python [OPTIONS]
 -h, --help: Show help page and exit
 
 -c, --bytes: Print the byte count for FILE
+
+FILE: the file to be processed, if not provided or is - STDIN will be process instead
