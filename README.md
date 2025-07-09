@@ -20,6 +20,8 @@ poetry run python src/wc_python [OPTIONS] [FILE]
 
 -h, --help: Show help page and exit
 
+-l, --lines: Print the newline count for FILE
+
 -c, --bytes: Print the byte count for FILE
 
 -m, --chars: Print the character count for FILE

@@ -6,6 +6,7 @@ GENERAL_ERROR_CODE = 1
 def main():
     # Command line arguments
     parser = argparse.ArgumentParser("wc_python", description="A recreation of Unix WC utility in python")
+    parser.add_argument("-l", "--lines", action="store_true", help="Print the newline count for FILE")
     parser.add_argument("-c", "--bytes", action="store_true", help="Print the byte count for FILE")
     parser.add_argument("-m", "--chars", action="store_true", help="Print the character count for FILE")
     parser.add_argument("-v", "--version", action="store_true", help="Show version details and exit")
@@ -15,7 +16,7 @@ def main():
     
     # Version details
     if args.version:
-        print("wc_pyhon version 0.4.0")
+        print("wc_pyhon version 0.5.0")
         print("Written by BlackDandel10n")
         print("Summer 2025")
         quit()

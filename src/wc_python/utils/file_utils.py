@@ -16,11 +16,14 @@ def get_details(path):
         details = {
             "bytes": getsize(path),
             "chars": 0,
+            "lines": 0,
         }
 
         with open(path, "r") as file:
             for line in file:
-                for _ in line:
+                for char in line:
+                    if char == "\n":
+                        details["lines"] += 1
                     details["chars"] += 1
 
         return details
