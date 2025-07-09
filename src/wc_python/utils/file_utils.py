@@ -29,3 +29,24 @@ def get_details(path):
         return details
     except Exception:
         return None
+
+def read_nul_terminated_file(path):
+    files = []
+    
+    try:
+        with open(path, "r") as file:
+            curr = ""
+            
+            for line in file:
+                for char in line:
+                    if char == "\0":
+                        files.append(curr)
+                        curr = ""
+                        continue
+                    curr += char
+            if len(curr) > 0:
+                files.append(curr)
+            
+            return files
+    except Exception:
+        return None

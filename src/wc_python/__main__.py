@@ -9,6 +9,7 @@ def main():
     parser.add_argument("-l", "--lines", action="store_true", help="Print the newline count for FILE")
     parser.add_argument("-c", "--bytes", action="store_true", help="Print the byte count for FILE")
     parser.add_argument("-m", "--chars", action="store_true", help="Print the character count for FILE")
+    parser.add_argument("--files0-from", type=str, nargs="+", help="read input from the files specified by NUL-terminated names in file F; If F is - then read names from standard input")
     parser.add_argument("-v", "--version", action="store_true", help="Show version details and exit")
     parser.add_argument("FILE", type=str, nargs="*", help="the file to be processed, if - the STDIN will be used")
 
@@ -16,7 +17,7 @@ def main():
     
     # Version details
     if args.version:
-        print("wc_pyhon version 0.5.0")
+        print("wc_pyhon version 0.6.0")
         print("Written by BlackDandel10n")
         print("Summer 2025")
         quit()
@@ -24,8 +25,29 @@ def main():
     # Get program state
     state = state_report.get_state(args)
 
+    # Get all FILEs
+    all_files = []
+    for file in args.FILE:
+        all_files.append(file)
+    # Read NUL-terminated files
+    if args.files0_from:
+        for file in args.files0_from:
+            nul_term_files = file_utils.read_nul_terminated_file(file)
+            
+            meta_data = file_utils.get_metadata(file)
+            if not meta_data["exists"]:
+                print(f"{parser.prog}: No such file or directory: {file}")
+                quit(GENERAL_ERROR_CODE)
+            elif not meta_data["is_file"]:
+                print(f"{parser.prog}: {file}: Is a directory")
+                quit(GENERAL_ERROR_CODE)
+            if nul_term_files is None:
+                print(f"{parser.prog}: {file}: Something went wrong")
+                quit(GENERAL_ERROR_CODE)
+            all_files += nul_term_files
+
     # No FILE
-    if not args.FILE:
+    if not all_files:
         details = stdin_utils.get_details()
         if details is None:
             print(f"{parser.prog}: Something went wrong")
@@ -35,12 +57,12 @@ def main():
         quit()
 
     # With FILE
-    for f in args.FILE:
+    for f in all_files:
         # STDIN
         if f == "-":
             details = stdin_utils.get_details()
             if details is None:
-                print(f"{parser.prog}: Something went wrong")
+                print(f"{parser.prog}: {f}: Something went wrong")
                 continue
         else:
             # File
