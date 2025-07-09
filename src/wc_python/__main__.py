@@ -20,7 +20,7 @@ def main():
     
     # Version details
     if args.version:
-        print("wc_pyhon version 0.9.0")
+        print("wc_pyhon version 1.0.0")
         print("Written by BlackDandel10n")
         print("Summer 2025")
         quit()

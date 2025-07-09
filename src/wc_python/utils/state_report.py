@@ -15,7 +15,7 @@ def get_state(args):
     state |= args.max_line_length * StateCode.MAX_LENGTH.value
     state |= args.words * StateCode.WORDS.value
 
-    return state
+    return state or StateCode.BYTES.value | StateCode.WORDS.value | StateCode.LINES.value
 
 def report(state, details, file_name = ""):
     if state & StateCode.LINES.value:

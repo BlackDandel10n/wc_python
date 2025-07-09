@@ -1,6 +1,6 @@
 [project]
 name = "wc-python"
-version = "0.9.0"
+version = "1.0.0"
 description = "A recreation of Unix WC utility in python"
 authors = [
     {name = "BlackDandel10n",email = "blackdandel10n@proton.me"}
