@@ -4,6 +4,7 @@ INT_ERROR_CODE = 130
 def get_details():
     details = {
         "bytes": 0,
+        "chars": 0,
     }
     try:
         data = stdin.read()
@@ -14,5 +15,6 @@ def get_details():
 
     for char in data:
         details["bytes"] += len(char.encode("utf-8"))
+        details["chars"] += 1
     
     return details

@@ -7,6 +7,7 @@ def main():
     # Command line arguments
     parser = argparse.ArgumentParser("wc_python", description="A recreation of Unix WC utility in python")
     parser.add_argument("-c", "--bytes", action="store_true", help="Print the byte count for FILE")
+    parser.add_argument("-m", "--chars", action="store_true", help="Print the character count for FILE")
     parser.add_argument("-v", "--version", action="store_true", help="Show version details and exit")
     parser.add_argument("FILE", type=str, nargs="*", help="the file to be processed, if - the STDIN will be used")
 
@@ -14,7 +15,7 @@ def main():
     
     # Version details
     if args.version:
-        print("wc_pyhon version 0.3.0")
+        print("wc_pyhon version 0.4.0")
         print("Written by BlackDandel10n")
         print("Summer 2025")
         quit()

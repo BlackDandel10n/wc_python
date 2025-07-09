@@ -22,4 +22,6 @@ poetry run python src/wc_python [OPTIONS] [FILE]
 
 -c, --bytes: Print the byte count for FILE
 
+-m, --chars: Print the character count for FILE
+
 FILE: the file to be processed, if not provided or is - STDIN will be process instead
