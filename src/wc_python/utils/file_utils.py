@@ -17,14 +17,19 @@ def get_details(path):
             "bytes": getsize(path),
             "chars": 0,
             "lines": 0,
+            "max_length": 0,
         }
 
         with open(path, "r") as file:
             for line in file:
+                curr_line_length = 0
                 for char in line:
                     if char == "\n":
+                        details["max_length"] = max(details["max_length"], curr_line_length)
                         details["lines"] += 1
                     details["chars"] += 1
+                    curr_line_length += 1
+            details["max_length"] = max(details["max_length"], curr_line_length)
 
         return details
     except Exception:
