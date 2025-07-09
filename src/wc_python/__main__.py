@@ -11,6 +11,7 @@ def main():
     parser.add_argument("-m", "--chars", action="store_true", help="Print the character count for FILE")
     parser.add_argument("--files0-from", type=str, nargs="+", help="read input from the files specified by NUL-terminated names in file F; If F is - then read names from standard input")
     parser.add_argument("-L", "--max-line-length", action="store_true", help="Print the maximum line length from FILE")
+    parser.add_argument("-w", "--words", action="store_true", help="Print the word count for FILE")
     parser.add_argument("-v", "--version", action="store_true", help="Show version details and exit")
     parser.add_argument("FILE", type=str, nargs="*", help="the file to be processed, if - the STDIN will be used")
 
@@ -18,7 +19,7 @@ def main():
     
     # Version details
     if args.version:
-        print("wc_pyhon version 0.7.0")
+        print("wc_pyhon version 0.8.0")
         print("Written by BlackDandel10n")
         print("Summer 2025")
         quit()

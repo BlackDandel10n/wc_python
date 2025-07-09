@@ -30,4 +30,6 @@ poetry run python src/wc_python [OPTIONS] [FILE]
 
 -L, --max-line-length: Print the maximum line length from FILE
 
+-w, --words: Print the word count for FILE
+
 FILE: the file to be processed, if not provided or is - STDIN will be process instead
