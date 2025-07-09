@@ -12,6 +12,7 @@ def main():
     parser.add_argument("--files0-from", type=str, nargs="+", help="read input from the files specified by NUL-terminated names in file F; If F is - then read names from standard input")
     parser.add_argument("-L", "--max-line-length", action="store_true", help="Print the maximum line length from FILE")
     parser.add_argument("-w", "--words", action="store_true", help="Print the word count for FILE")
+    parser.add_argument("--total", type=str, help="when to print a line with total counts; can be: auto, always, only, never")
     parser.add_argument("-v", "--version", action="store_true", help="Show version details and exit")
     parser.add_argument("FILE", type=str, nargs="*", help="the file to be processed, if - the STDIN will be used")
 
@@ -19,10 +20,18 @@ def main():
     
     # Version details
     if args.version:
-        print("wc_pyhon version 0.8.0")
+        print("wc_pyhon version 0.9.0")
         print("Written by BlackDandel10n")
         print("Summer 2025")
         quit()
+
+    # Get total state
+    total_state = "auto"
+    if args.total:
+        if args.total not in ["auto", "always", "only", "never"]:
+            print(f"{parser.prog}: Invalid value for total: {args.total}")
+            quit(GENERAL_ERROR_CODE)
+        total_state = args.total
 
     # Get program state
     state = state_report.get_state(args)
@@ -31,6 +40,7 @@ def main():
     all_files = []
     for file in args.FILE:
         all_files.append(file)
+
     # Read NUL-terminated files
     if args.files0_from:
         for file in args.files0_from:
@@ -59,6 +69,14 @@ def main():
 
         state_report.report(state, details)
         quit()
+
+    total_details = {
+            "bytes": 0,
+            "chars": 0,
+            "lines": 0,
+            "max_length": 0,
+            "words": 0,
+        }
 
     # With FILE
     for f in all_files:
@@ -90,8 +108,16 @@ def main():
             if details is None:
                 print(f"{parser.prog}: {f}: Something went wrong")
                 continue
+        
+        # Add to total
+        for key in details.keys():
+            total_details[key] += details[key]
 
-        state_report.report(state, details, f)
+        if total_state != "only":
+            state_report.report(state, details, f)
+
+    if total_state == "always" or total_state == "only" or (total_state != "never" and len(all_files) > 1):
+        state_report.report(state, total_details, "total")
 
 if __name__ == "__main__":
     main()
