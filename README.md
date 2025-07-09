@@ -19,3 +19,5 @@ poetry run python src/wc_python [OPTIONS]
 -v, --version: Show version details and exit
 
 -h, --help: Show help page and exit
+
+-c, --bytes: Print the byte count for FILE

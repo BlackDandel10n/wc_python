@@ -1,16 +1,22 @@
 from os.path import isfile, exists, getsize
 
 def get_metadata(path):
-    details = {
-        "exists": exists(path),
-        "is_file": isfile(path)
-    }
+    try:
+        details = {
+            "exists": exists(path),
+            "is_file": isfile(path)
+        }
 
-    return details
+        return details
+    except Exception:
+        return None
 
 def get_details(path):
-    details = {
-        "bytes": getsize(path),
-    }
+    try:
+        details = {
+            "bytes": getsize(path),
+        }
 
-    return details
+        return details
+    except Exception:
+        return None

@@ -1,9 +1,10 @@
 import argparse
-from utils import file_utils, stdin_utils
+from utils import file_utils, stdin_utils, state_report
 
 def main():
     # Command line arguments
     parser = argparse.ArgumentParser("wc_python", description="A recreation of Unix WC utility in python")
+    parser.add_argument("-c", "--bytes", action="store_true", help="Print the byte count for FILE")
     parser.add_argument("-v", "--version", action="store_true", help="Show version details and exit")
     parser.add_argument("FILE", type=str, nargs="*", help="the file to be processed, if - the STDIN will be used")
 
@@ -11,14 +12,21 @@ def main():
     
     # Version details
     if args.version:
-        print("wc_pyhon version 0.2.0")
+        print("wc_pyhon version 0.2.5")
         print("Written by BlackDandel10n")
         print("Summer 2025")
         quit()
 
+    # Get program state
+    state = state_report.get_state(args)
+    print(state)
+
     # No FILE
     if not args.FILE:
         details = stdin_utils.get_details()
+        if details is None:
+            print(f"{parser.prog}: Something went wrong")
+        
         quit()
 
     # With FILE
@@ -26,11 +34,15 @@ def main():
         # STDIN
         if f == "-":
             details = stdin_utils.get_details()
+            if details is None:
+                print(f"{parser.prog}: Something went wrong")
         else:
             # File
             # Check file availability
             meta_data = file_utils.get_metadata(f)
-            if not meta_data["exists"]:
+            if not meta_data:
+                print(f"{parser.prog}: {f}: Something went wrong")
+            elif not meta_data["exists"]:
                 print(f"{parser.prog}: No such file or directory: {f}")
                 continue
             elif not meta_data["is_file"]:
@@ -38,6 +50,8 @@ def main():
                 continue
 
             details = file_utils.get_details(f)
+            if details is None:
+                print(f"{parser.prog}: {f}: Something went wrong")
 
 if __name__ == "__main__":
     main()
